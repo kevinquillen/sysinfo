@@ -1,0 +1,16 @@
+[package]
+name = "sysinfo"
+version = "0.0.0"
+edition = "2021"
+authors = ["Kevin Quillen <kevinquillen@gmail.com>"]
+description = "tbd."
+categories = []
+license = "MIT"
+keywords = []
+
+[dependencies]
+slint = "1.8.0"
+sysinfo = { version = "0.30", features = ["multithread"] }
+
+[build-dependencies]
+slint-build = "1.8.0"

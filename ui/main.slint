@@ -1,0 +1,46 @@
+import { StandardTableView } from "std-widgets.slint";
+export component MainWindow inherits Window {
+    width: 500px;
+    height: 400px;
+    title: @tr("System Information");
+
+    StandardTableView {
+      horizontal-stretch: 1;
+      min-height: 400px;
+      min-width: 500px;
+      columns: [
+          { title: "Property" },
+          { title: "Value" },
+      ];
+      rows: [
+          [
+              { text: "OS" }, { text: root.os },
+          ],
+          [
+              { text: "Version" }, { text: root.version },
+          ],
+          [
+              { text: "Memory" }, { text: root.memory + " GB" },
+          ],
+          [
+              { text: "CPU" }, { text: root.cpu },
+          ],
+          [
+              { text: "Disk space" }, { text: root.disk + " GB available" },
+          ],
+          [
+              { text: "Disk size" }, { text: root.disk_size + " GB total" },
+          ]
+      ];
+        y: 0px;
+        x: 0px;
+    }
+
+    in-out property<string> os;
+    in-out property<string> dist;
+    in-out property<string> version;
+    in-out property<string> memory;
+    in-out property<string> disk;
+    in-out property<string> disk_size;
+    in-out property<string> cpu;
+}
