@@ -1,40 +1,8 @@
-import { StandardTableView } from "std-widgets.slint";
+import { StandardTableView, ScrollView } from "std-widgets.slint";
 export component MainWindow inherits Window {
-    width: 500px;
-    height: 400px;
+    width: 800px;
+    height: 600px;
     title: @tr("System Information");
-
-    StandardTableView {
-      horizontal-stretch: 1;
-      min-height: 400px;
-      min-width: 500px;
-      columns: [
-          { title: "Property" },
-          { title: "Value" },
-      ];
-      rows: [
-          [
-              { text: "OS" }, { text: root.os },
-          ],
-          [
-              { text: "Version" }, { text: root.version },
-          ],
-          [
-              { text: "Memory" }, { text: root.memory + " GB" },
-          ],
-          [
-              { text: "CPU" }, { text: root.cpu },
-          ],
-          [
-              { text: "Disk space" }, { text: root.disk + " GB available" },
-          ],
-          [
-              { text: "Disk size" }, { text: root.disk_size + " GB total" },
-          ]
-      ];
-        y: 0px;
-        x: 0px;
-    }
 
     in-out property<string> os;
     in-out property<string> dist;
@@ -43,4 +11,56 @@ export component MainWindow inherits Window {
     in-out property<string> disk;
     in-out property<string> disk_size;
     in-out property<string> cpu;
+
+    callback appexit();
+    callback refresh();
+
+    MenuBar {
+      Menu {
+        title: @tr("Actions");
+        MenuItem {
+          title: "Refresh";
+          activated => { refresh() }
+        }
+        MenuItem {
+          title: "Exit";
+          activated => { appexit() }
+        }
+      }
+      Menu {
+        title: @tr("About");
+        MenuItem {
+          title: "Info";
+        }
+      }
+    }
+
+    VerticalLayout {
+      padding: 0px;
+      spacing: 0px;
+
+      StandardTableView {
+          min-width: 400px;
+          rows: [
+            [
+                { text: "OS" }, { text: root.os },
+            ],
+            [
+                { text: "Version" }, { text: root.version },
+            ],
+            [
+                { text: "Memory" }, { text: root.memory + " GB" },
+            ],
+            [
+                { text: "CPU" }, { text: root.cpu },
+            ],
+            [
+                { text: "Disk space" }, { text: root.disk + " GB available" },
+            ],
+            [
+                { text: "Disk size" }, { text: root.disk_size + " GB total" },
+            ]
+        ];
+      }
+    }
 }

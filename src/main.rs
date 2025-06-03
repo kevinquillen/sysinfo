@@ -2,6 +2,7 @@
 
 use slint::SharedString;
 use sysinfo::{Disks, System};
+use slint::quit_event_loop;
 
 slint::include_modules!();
 
@@ -14,10 +15,8 @@ fn main() -> Result<(), slint::PlatformError> {
     let dist = System::distribution_id();
     let version = System::long_os_version().unwrap();
     let total_memory = system.total_memory() / (1024 * 1024 * 1024);
-
     let disks = Disks::new_with_refreshed_list();
-
-
+    
     main_window.set_os(SharedString::from(format!("{}", os)));
     main_window.set_dist(SharedString::from(format!("{}", dist)));
     main_window.set_version(SharedString::from(format!("{}", version)));
@@ -29,6 +28,10 @@ fn main() -> Result<(), slint::PlatformError> {
         main_window.set_disk_size(SharedString::from(format!("{}", disk.total_space() / 1_000_000_000)));
         break;
     }
+    
+    main_window.on_appexit(|| {
+        let _ = quit_event_loop();
+    });
 
     main_window.run()?;
     Ok(())
